@@ -30,4 +30,4 @@ Kubernetes is an open-source container orchestration platform that automates the
 
 These are some of the fundamental concepts of Kubernetes. Kubernetes offers many more features and advanced concepts to manage containerized applications effectively, such as volumes, secrets, ingress, stateful sets, and more.
 
-https://github.com/plaethos09/Devops_notes/blob/main/img/kube_arch.png
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/kube_arch.png)
