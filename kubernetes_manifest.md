@@ -713,3 +713,5 @@ spec:
 In this example, the `example-pod` pod mounts the `example-configmap` ConfigMap's data as a volume at the path `/etc/config` inside the `example-container` container.
 
 By using ConfigMaps, you can easily manage and update your application's configurations without modifying the application itself, providing greater flexibility and separation of concerns.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-08-01%20at%2012.10.06%20AM.png)
