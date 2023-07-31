@@ -192,3 +192,87 @@ Replica Sets are a level above pods that ensures a certain number of pods are al
 
 If one of the pods thats is part of a replica set crashes, one will be created to take its place.
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.26.06%20PM.png)
+
+
+
+**STATEFULSET IN KUBERNETES**
+
+In Kubernetes, a StatefulSet is an object used to manage stateful applications, such as databases, that require unique network identities and stable storage across rescheduling. Unlike ReplicaSets or Deployments, StatefulSets provide guarantees about the ordering and uniqueness of pods, making them suitable for applications that rely on stable network identities and persistent storage.
+
+StatefulSets maintain a unique, stable hostname for each pod, based on the pod's ordinal index. When you scale a StatefulSet or replace a pod, Kubernetes ensures that the new pod retains its identity and any associated persistent storage.
+
+Here's a detailed explanation of the components in a StatefulSet manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a StatefulSet, it is typically `apps/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `StatefulSet`.
+
+3. **metadata**: Contains information about the StatefulSet, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the StatefulSet, which contains the following key components:
+   - **replicas**: The desired number of replicas (pods) to maintain. This determines the number of replicas that the StatefulSet will create and maintain.
+   - **serviceName**: The name of the headless service that StatefulSet manages. The headless service provides DNS for the StatefulSet's pods, allowing them to have stable, predictable hostnames.
+   - **selector**: A label selector used to match the pods controlled by this StatefulSet. The selector is used to identify which pods the StatefulSet is responsible for.
+   - **template**: The pod template that specifies the desired configuration for the pods controlled by this StatefulSet. It includes specifications for containers, volumes, environment variables, etc.
+   - **volumeClaimTemplates**: An array of PersistentVolumeClaim templates that define the storage requirements for each pod. Each pod gets its own PersistentVolumeClaim based on these templates.
+
+Now, let's create a simple manifest file for a StatefulSet running an example stateful application:
+
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: example-statefulset
+spec:
+  replicas: 3
+  serviceName: example-statefulset-headless
+  selector:
+    matchLabels:
+      app: example-app
+  template:
+    metadata:
+      labels:
+        app: example-app
+    spec:
+      containers:
+        - name: example-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
+  volumeClaimTemplates:
+    - metadata:
+        name: data-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+```
+
+In this manifest file:
+- We are using the `apps/v1` API version for the StatefulSet.
+- The `kind` is set to `StatefulSet`.
+- Under `metadata`, we provide the name of the StatefulSet as `example-statefulset`.
+- In the `spec` section:
+  - We specify that we want to have 3 replicas (`replicas: 3`) of the stateful application.
+  - The `serviceName` field is set to `example-statefulset-headless`, which will be the name of the headless service created for DNS resolution.
+  - The `selector` field defines the label selector used to match the pods controlled by this StatefulSet. In this case, the selector is `app: example-app`, which matches the label of the pods defined in the `template`.
+  - The `template` section contains the pod template specification:
+    - We define a single container named `example-container` that runs the `nginx:latest` image.
+    - The container exposes port 80 using the `containerPort` field.
+    - The pod is labeled with `app: example-app`, which matches the selector defined in the `selector` field.
+    - The container mounts a volume named `data-volume` at the path `/data`.
+  - The `volumeClaimTemplates` section contains an array of PersistentVolumeClaim templates that define storage requirements for each pod:
+    - We define a single PersistentVolumeClaim template named `data-volume`.
+    - The PersistentVolumeClaim requests 1Gi of storage and uses the `ReadWriteOnce` access mode, which means it can be mounted as read-write by a single node at a time.
+
+To create the StatefulSet in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-statefulset.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-statefulset.yaml
+```
+
+The Kubernetes API server will create the StatefulSet as specified in the manifest file, which will, in turn, create and manage three replicas of the stateful application. Each pod will have its unique, stable hostname based on the pod's ordinal index. You can check the status of the StatefulSet and its pods using `kubectl get statefulsets` and `kubectl get pods`.
