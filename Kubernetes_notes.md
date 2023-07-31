@@ -150,6 +150,13 @@ These additional Kubernetes objects offer even more flexibility and control over
 
 
 
+
+
+
+
+
+
+
 **How kubernetes objects are created ?**
 
 Kubernetes objects are created using declarative configuration files or imperatively using the Kubernetes API. Let's explore both methods:
@@ -183,7 +190,8 @@ Kubernetes objects are created using declarative configuration files or imperati
 
    The Kubernetes API server receives the configuration file and updates the cluster to match the desired state specified in the file. If the object already exists, the command will update it to match the new configuration. If the object doesn't exist, it will be created.
 
-2. **Imperative Commands (Not Recommended for Production):**
+
+3. **Imperative Commands (Not Recommended for Production):**
 
    In the imperative approach, you use `kubectl` commands directly to create or modify Kubernetes objects. This method involves specifying all the details on the command line without using configuration files. While this approach can be useful for quick testing and experimentation, it's not recommended for production use because it's harder to version, maintain, and collaborate on configurations.
 
