@@ -339,3 +339,4 @@ kubectl apply -f log-collector-daemonset.yaml
 
 The Kubernetes API server will create the DaemonSet as specified in the manifest file, and it will automatically ensure that a pod of the log collector is scheduled and running on all nodes in the cluster. You can check the status of the DaemonSet and its pods using `kubectl get daemonsets` and `kubectl get pods`.
 
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/daemonset-explained.png)
