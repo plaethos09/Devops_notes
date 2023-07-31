@@ -977,3 +977,5 @@ kubectl apply -f example-ingress.yaml
 The Kubernetes API server will create the Ingress as specified in the manifest file. The Ingress Controller (e.g., Nginx Ingress Controller) will process the Ingress rules and configure the load balancer to route incoming requests to the appropriate backend services based on the defined rules.
 
 Please note that for the Ingress to work, you need to have a running Ingress Controller in your cluster that supports and understands the Ingress resource. The actual implementation of the Ingress rules depends on the specific Ingress Controller you are using.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/ingress-fanout.png)
