@@ -1160,3 +1160,9 @@ The Kubernetes API server will create the PodDisruptionBudget as specified in th
 Using PodDisruptionBudgets helps you ensure that your applications remain available and reliable even during maintenance operations or disruptions, reducing the risk of downtime and service outages.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/zyrz9hdtm0rv3omg264n.png)
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/u76e1c968g6wfmmjgee4.png)
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/kjikii2jyfc5z4zncg7y.png)
+
+
