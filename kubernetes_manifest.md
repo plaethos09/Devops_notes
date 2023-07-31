@@ -116,4 +116,5 @@ kubectl apply -f nginx-deployment.yaml
 ```
 
 The Kubernetes API server will create the Deployment as specified in the manifest file, which will, in turn, create and manage two replicas of the Nginx pod. You can check the status of the Deployment and its replicas using `kubectl get deployments` and `kubectl get pods`.
+
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/07751442-deployment.png)
