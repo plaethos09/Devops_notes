@@ -625,6 +625,9 @@ The Kubernetes API server will create the LoadBalancer Service as specified in t
 
 
 **CONFIGMAP IN KUBERNETES**
+
+
+
 In Kubernetes, a ConfigMap is an API object used to store configuration data separately from the application's container image. It allows you to decouple configuration details from your application code, making it easier to manage and update configurations without modifying the application itself. ConfigMaps are typically used to store environment variables, command-line arguments, configuration files, or any other settings that your application needs.
 
 ConfigMaps can be used as volumes to inject configuration data into pods at runtime, or they can be used as environment variables or command-line arguments within containers.
