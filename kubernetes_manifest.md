@@ -340,3 +340,63 @@ kubectl apply -f log-collector-daemonset.yaml
 The Kubernetes API server will create the DaemonSet as specified in the manifest file, and it will automatically ensure that a pod of the log collector is scheduled and running on all nodes in the cluster. You can check the status of the DaemonSet and its pods using `kubectl get daemonsets` and `kubectl get pods`.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/daemonset-explained.png)
+
+
+**JOB IN KUBERNETES**
+
+In Kubernetes, a Job is an object used to manage batch jobs or one-off tasks that run to completion. It creates one or more pods to perform a specific task and ensures that the task is successfully completed before terminating the pod(s). Jobs are useful for running tasks that should be executed once, without manual intervention, and where completion is essential.
+
+When you create a Job, Kubernetes creates one or more pods to run the task. If the task is successfully completed (i.e., the pod(s) exit with a success status), the Job terminates. If the task fails (i.e., the pod(s) exit with a failure status), Kubernetes restarts the pod(s) to retry the task until it succeeds or reaches the maximum number of retries.
+
+Here's a detailed explanation of the components in a Job manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a Job, it is typically `batch/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `Job`.
+
+3. **metadata**: Contains information about the Job, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the Job, which contains the following key components:
+   - **template**: The pod template that specifies the desired configuration for the pods managed by the Job. It includes specifications for containers, volumes, environment variables, etc.
+   - **completions**: The desired number of successful completions of the task. The Job terminates when this number is reached.
+   - **parallelism**: The maximum number of pods that can run in parallel to complete the task.
+   - **restartPolicy**: Specifies the restart policy for the pods. For a Job, it is typically set to `OnFailure`, meaning the pod is restarted when it fails.
+
+Now, let's create a simple manifest file for a Job that performs a one-off task:
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: example-job
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      containers:
+        - name: example-container
+          image: busybox:latest
+          command: ["echo", "Hello, Kubernetes!"]
+      restartPolicy: OnFailure
+```
+
+In this manifest file:
+- We are using the `batch/v1` API version for the Job.
+- The `kind` is set to `Job`.
+- Under `metadata`, we provide the name of the Job as `example-job`.
+- In the `spec` section:
+  - We set `completions: 1`, which means the Job is considered successful when one pod completes the task successfully.
+  - We set `parallelism: 1`, which specifies that only one pod should run at a time to complete the task.
+  - The `template` section contains the pod template specification:
+    - We define a single container named `example-container` that runs the `busybox:latest` image.
+    - The container executes the command `echo "Hello, Kubernetes!"`.
+  - The `restartPolicy` is set to `OnFailure`, which means the pod will be restarted if it fails.
+
+To create the Job in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-job.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-job.yaml
+```
+
+The Kubernetes API server will create the Job as specified in the manifest file, and it will create one pod to perform the task. Once the task is successfully completed, the Job will terminate. You can check the status of the Job and its pods using `kubectl get jobs` and `kubectl get pods`.
