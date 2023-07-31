@@ -1222,3 +1222,55 @@ Please note that to use RBAC, your Kubernetes cluster must have RBAC enabled and
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screen-Shot-2020-08-13-at-11.17.56-AM.png)
 
 
+**ROLEBINDING IN KUBERNETES**
+
+In Kubernetes, a RoleBinding is an API object that associates a Role (or ClusterRole) with one or more users or service accounts within a specific namespace. It is used in Role-Based Access Control (RBAC) to grant permissions to users or service accounts, allowing them to perform actions on resources in the specified namespace based on the rules defined in the associated Role.
+
+A RoleBinding is typically used when you want to grant permissions at the namespace level and restrict access to specific resources within that namespace.
+
+Here's a detailed explanation of the components in a RoleBinding manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a RoleBinding, it is typically `rbac.authorization.k8s.io/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `RoleBinding`.
+
+3. **metadata**: Contains information about the RoleBinding, including its name and optional labels and annotations.
+
+4. **subjects**: The subjects section specifies the users or service accounts that will be bound to the associated Role. Each subject entry includes the `kind`, `name`, and `namespace` (if applicable) of the user or service account.
+
+5. **roleRef**: The roleRef section identifies the Role or ClusterRole that the RoleBinding is associated with. It includes the `kind` and `name` of the Role or ClusterRole.
+
+Now, let's create a simple manifest file for a RoleBinding that binds a Role named `example-role` to a service account named `example-serviceaccount` within the namespace `example-namespace`:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: example-rolebinding
+  namespace: example-namespace
+subjects:
+  - kind: ServiceAccount
+    name: example-serviceaccount
+    namespace: example-namespace
+roleRef:
+  kind: Role
+  name: example-role
+  apiGroup: rbac.authorization.k8s.io
+```
+
+In this manifest file:
+- We are using the `rbac.authorization.k8s.io/v1` API version for the RoleBinding.
+- The `kind` is set to `RoleBinding`.
+- Under `metadata`, we provide the name of the RoleBinding as `example-rolebinding`, and we specify the namespace where the Role and service account are defined.
+- In the `subjects` section, we define a single subject that is a service account with the `kind: ServiceAccount`, `name: example-serviceaccount`, and `namespace: example-namespace`. This service account will be granted the permissions defined in the associated Role.
+- In the `roleRef` section, we specify the `kind: Role` and `name: example-role`, indicating that the RoleBinding is associated with the Role named `example-role` within the `example-namespace`.
+
+To create the RoleBinding in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-rolebinding.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-rolebinding.yaml
+```
+
+The Kubernetes API server will create the RoleBinding as specified in the manifest file. The service account `example-serviceaccount` within the namespace `example-namespace` will now have the permissions defined in the associated `example-role`, allowing it to perform actions on the resources specified in the Role's rules.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screen-Shot-2020-08-13-at-10.58.16-AM.png)
