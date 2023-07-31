@@ -1274,3 +1274,75 @@ kubectl apply -f example-rolebinding.yaml
 The Kubernetes API server will create the RoleBinding as specified in the manifest file. The service account `example-serviceaccount` within the namespace `example-namespace` will now have the permissions defined in the associated `example-role`, allowing it to perform actions on the resources specified in the Role's rules.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screen-Shot-2020-08-13-at-10.58.16-AM.png)
+
+
+**STORAGE CLASS IN KUBERNETES**
+
+
+
+
+In Kubernetes, a StorageClass is an API object that defines the provisioner and parameters for dynamic provisioning of persistent storage volumes. It allows you to abstract the underlying storage details and dynamically allocate storage volumes when PersistentVolumeClaims (PVCs) are requested.
+
+StorageClasses are especially useful in cloud-based environments or when using dynamic storage provisioning systems (e.g., CSI drivers) because they enable you to request storage without having to pre-provision it manually.
+
+Here's a detailed explanation of the components in a StorageClass manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a StorageClass, it is typically `storage.k8s.io/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `StorageClass`.
+
+3. **metadata**: Contains information about the StorageClass, including its name and optional labels and annotations.
+
+4. **provisioner**: The provisioner field specifies the name of the external provisioner that the StorageClass will use to create persistent volumes.
+
+5. **parameters**: The parameters section includes key-value pairs that are specific to the provisioner. These parameters allow you to customize the behavior of the storage provisioning process.
+
+Now, let's create a simple manifest file for a StorageClass that uses the provisioner `example-provisioner` and includes a parameter `type=fast`:
+
+```yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: example-storageclass
+provisioner: example-provisioner
+parameters:
+  type: fast
+```
+
+In this manifest file:
+- We are using the `storage.k8s.io/v1` API version for the StorageClass.
+- The `kind` is set to `StorageClass`.
+- Under `metadata`, we provide the name of the StorageClass as `example-storageclass`.
+- In the `provisioner` field, we specify `example-provisioner`, which is the name of the external provisioner that will handle the storage provisioning.
+- In the `parameters` section, we provide a custom parameter `type: fast`, which is specific to the `example-provisioner` provisioner. This parameter can be used by the provisioner to define the type of storage being provisioned (e.g., fast storage).
+
+To create the StorageClass in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-storageclass.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-storageclass.yaml
+```
+
+The Kubernetes API server will create the StorageClass as specified in the manifest file. Now, when you create a PersistentVolumeClaim, you can request storage from this StorageClass, and the dynamic provisioning system will create a PersistentVolume that meets the defined parameters.
+
+For example, you can use the `storageClassName` field in your PVC manifest to request storage from the `example-storageclass`:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: example-pvc
+spec:
+  storageClassName: example-storageclass
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+In this example, the PVC requests 1Gi of storage from the `example-storageclass` StorageClass, which uses the `example-provisioner` provisioner with the `type: fast` parameter.
+
+Dynamic provisioning with StorageClasses simplifies storage management in Kubernetes, allowing you to request and use persistent storage without manual intervention or having to pre-provision volumes.
+
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-08-01%20at%2012.17.08%20AM.png)
