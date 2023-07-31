@@ -1105,3 +1105,56 @@ In this example, the `example-pod` pod uses the `example-serviceaccount` Service
 Using ServiceAccounts with appropriate RBAC policies ensures that your pods have the necessary permissions to perform their intended tasks while maintaining security and access control within the Kubernetes cluster.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/1%202Q3SrPsBgNjwvE25b0SgYA.png)
+
+
+
+**PodDisruptionBudget (PDB) IN KUBERNETES**
+
+In Kubernetes, a PodDisruptionBudget (PDB) is an API object that specifies the minimum number of pods that must be available during voluntary disruptions, such as node maintenance or scaling down a deployment. It is a way to ensure high availability and fault tolerance by preventing too many pods of a specific deployment or replica set from being unavailable at the same time.
+
+PodDisruptionBudgets work in conjunction with the Kubernetes cluster's control plane to safely drain nodes or perform scaling operations without causing excessive downtime or service disruptions.
+
+Here's a detailed explanation of the components in a PodDisruptionBudget manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a PodDisruptionBudget, it is typically `policy/v1beta1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `PodDisruptionBudget`.
+
+3. **metadata**: Contains information about the PodDisruptionBudget, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the PodDisruptionBudget, which contains the following key components:
+   - **selector**: Specifies the label selector that identifies the pods targeted by the PodDisruptionBudget. The PDB applies only to pods matching this selector.
+   - **minAvailable**: The minimum number of available replicas that should be maintained during a disruption. For example, setting `minAvailable: 2` ensures that at least two replicas of the targeted pods are available at any time.
+   - **maxUnavailable**: The maximum number of replicas that can be unavailable during a disruption. Setting this field allows you to control the number of pods that can be temporarily unavailable during a disruption. If both `minAvailable` and `maxUnavailable` are specified, the PDB takes the higher value of the two.
+
+Now, let's create a simple manifest file for a PodDisruptionBudget:
+
+```yaml
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: example-pdb
+spec:
+  selector:
+    matchLabels:
+      app: example-app
+  minAvailable: 2
+```
+
+In this manifest file:
+- We are using the `policy/v1beta1` API version for the PodDisruptionBudget.
+- The `kind` is set to `PodDisruptionBudget`.
+- Under `metadata`, we provide the name of the PodDisruptionBudget as `example-pdb`.
+- In the `spec` section:
+  - The `selector` field specifies the label selector that identifies the pods targeted by the PodDisruptionBudget. In this example, the PDB applies only to pods labeled with `app: example-app`.
+  - The `minAvailable` is set to `2`, indicating that at least two replicas of the targeted pods should be available at any time during a disruption.
+
+To create the PodDisruptionBudget in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-pdb.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-pdb.yaml
+```
+
+The Kubernetes API server will create the PodDisruptionBudget as specified in the manifest file. The PDB will enforce that during voluntary disruptions, such as scaling down a deployment or draining nodes, at least two replicas of the pods labeled with `app: example-app` are available at all times.
+
+Using PodDisruptionBudgets helps you ensure that your applications remain available and reliable even during maintenance operations or disruptions, reducing the risk of downtime and service outages.
