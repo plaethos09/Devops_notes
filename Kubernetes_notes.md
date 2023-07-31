@@ -33,6 +33,10 @@ These are some of the fundamental concepts of Kubernetes. Kubernetes offers many
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/kube_arch.png)
 
 
+
+
+
+
 **what are the basic services of kubernetes**
 
 In Kubernetes, Services are a fundamental resource used to provide networking and load balancing capabilities to pods running within the cluster. They act as an abstraction layer to expose applications and make them accessible to other services or external users. There are several types of basic services in Kubernetes:
