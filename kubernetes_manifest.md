@@ -905,3 +905,5 @@ spec:
 In this example, we added a `namespace: example-namespace` field under the `metadata` section of the Deployment manifest, specifying that this Deployment should be created within the `example-namespace` Namespace.
 
 By using Namespaces, you can organize resources and manage access control more effectively, especially in multi-team or multi-application Kubernetes clusters.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/azure-kubernetes-service-namespaces-2.png)
