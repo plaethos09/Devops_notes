@@ -67,7 +67,6 @@ This is not an exhaustive list, and `kubectl` supports many other commands and f
 
 **kubectl Pods Commands**
 
-As of my knowledge cutoff in September 2021, here is a list of `kubectl` commands specifically related to working with pods in Kubernetes:
 
 1. Get information about pods:
    - `kubectl get pods`: List all pods in the current namespace.
@@ -109,4 +108,4 @@ As of my knowledge cutoff in September 2021, here is a list of `kubectl` command
 9. View the pod's YAML definition:
    - `kubectl get pod [pod-name] -o yaml`: Display the YAML definition of a specific pod.
 
-Please note that the commands mentioned above are based on the state of Kubernetes and `kubectl` up to September 2021. Since Kubernetes is a rapidly evolving project, there may be additional commands or changes introduced in newer versions. For the most up-to-date information and additional options, you can always refer to the official Kubernetes documentation or use `kubectl --help` to get the latest command details.
+
