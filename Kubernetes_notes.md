@@ -61,7 +61,7 @@ It's important to note that the choice of service type depends on the use case a
 
 
 
-
+<br  />
 
 **what are various kubernetes objects**
 
