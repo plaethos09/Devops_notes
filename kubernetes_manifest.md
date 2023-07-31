@@ -514,3 +514,50 @@ kubectl apply -f nginx-nodeport-service.yaml
 ```
 
 The Kubernetes API server will create the NodePort Service as specified in the manifest file, exposing the Nginx pods on port 30080 on each node in the cluster. You can check the status of the Service using `kubectl get services`. External clients can access the Nginx web server by reaching any node's IP address on port 30080.
+
+**EXTERNAL NAME SERVICE IN KUBERNETES**
+In Kubernetes, an ExternalName Service is a type of Service that provides a DNS-based mapping to an external service, outside of the cluster. It does not expose any ports on the cluster's nodes or provide load balancing. Instead, it serves as a simple alias to an external resource, allowing applications inside the cluster to access an external service by its DNS name.
+
+ExternalName Services are particularly useful when you want to access an external service by name without the need for complex configurations within the cluster. For example, you can use an ExternalName Service to map an internal DNS name to an external database service hosted outside the Kubernetes cluster.
+
+Here's a detailed explanation of the components in an ExternalName Service manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a Service, it is typically `v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `Service`.
+
+3. **metadata**: Contains information about the Service, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the Service, which contains the following key components:
+   - **type**: The type of Service. For an ExternalName Service, it should be set to `ExternalName`.
+   - **externalName**: The DNS name of the external service to be accessed by applications within the cluster.
+
+Now, let's create a simple manifest file for an ExternalName Service that maps an internal DNS name to an external service:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: external-db-service
+spec:
+  type: ExternalName
+  externalName: external-db.example.com
+```
+
+In this manifest file:
+- We are using the `v1` API version for the Service.
+- The `kind` is set to `Service`.
+- Under `metadata`, we provide the name of the Service as `external-db-service`.
+- In the `spec` section:
+  - The `type` is set to `ExternalName`, making it an ExternalName Service.
+  - The `externalName` is set to `external-db.example.com`, which is the DNS name of the external service to be accessed.
+
+To create the ExternalName Service in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `external-db-service.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f external-db-service.yaml
+```
+
+The Kubernetes API server will create the ExternalName Service as specified in the manifest file. Now, applications inside the cluster can access the external service `external-db.example.com` by using the `external-db-service` DNS name.
+
+Please note that an ExternalName Service does not provide load balancing or any other features that are typical of other Service types. It is simply a DNS alias to the specified external resource.
