@@ -400,3 +400,4 @@ kubectl apply -f example-job.yaml
 ```
 
 The Kubernetes API server will create the Job as specified in the manifest file, and it will create one pod to perform the task. Once the task is successfully completed, the Job will terminate. You can check the status of the Job and its pods using `kubectl get jobs` and `kubectl get pods`.
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.46.13%20PM.png)
