@@ -516,6 +516,7 @@ kubectl apply -f nginx-nodeport-service.yaml
 The Kubernetes API server will create the NodePort Service as specified in the manifest file, exposing the Nginx pods on port 30080 on each node in the cluster. You can check the status of the Service using `kubectl get services`. External clients can access the Nginx web server by reaching any node's IP address on port 30080.
 
 **EXTERNAL NAME SERVICE IN KUBERNETES**
+
 In Kubernetes, an ExternalName Service is a type of Service that provides a DNS-based mapping to an external service, outside of the cluster. It does not expose any ports on the cluster's nodes or provide load balancing. Instead, it serves as a simple alias to an external resource, allowing applications inside the cluster to access an external service by its DNS name.
 
 ExternalName Services are particularly useful when you want to access an external service by name without the need for complex configurations within the cluster. For example, you can use an ExternalName Service to map an internal DNS name to an external database service hosted outside the Kubernetes cluster.
