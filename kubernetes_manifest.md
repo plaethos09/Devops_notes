@@ -182,4 +182,10 @@ kubectl apply -f nginx-replicaset.yaml
 
 The Kubernetes API server will create the ReplicaSet as specified in the manifest file, which will, in turn, create and manage two replicas of the Nginx pod. You can check the status of the ReplicaSet and its replicas using `kubectl get replicasets` and `kubectl get pods`.
 
+
+**THEORY**
+
+One of the biggest reasons that we don’t deploy naked pods in production is that they are not trustworthy. By this I mean that we can’t count on them to always be running. Kubernetes doesn’t ensure that a pod will continue running if it crashes. A pod could die for all kinds of reasons such as a node that it was running on had failed, it ran out of resources, it was stopped for some reason, etc. If the pod dies, it stays dead until someone fixes it which is not ideal, but with containers we should expect them to be short lived anyway, so let’s plan for it.
+
+Replica Sets are a level above pods that ensures a certain number of pods are always running. A Replica Set allows you to define the number of pods that need to be running at all times and this number could be “1”. If a pod crashes, it will be recreated to get back to the desired state. For this reason, replica sets are preferred over a naked pod because they provide some high availability.
 []
