@@ -191,3 +191,4 @@ Replica Sets are a level above pods that ensures a certain number of pods are al
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.25.42%20PM.png)
 
 If one of the pods thats is part of a replica set crashes, one will be created to take its place.
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.26.06%20PM.png)
