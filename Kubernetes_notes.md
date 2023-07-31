@@ -53,3 +53,95 @@ It's important to note that the choice of service type depends on the use case a
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%207.47.24%20PM.png)
 
+
+
+
+
+
+
+**what are various kubernetes objects**
+
+In Kubernetes, objects are the basic building blocks used to represent the desired state of your cluster and the applications running within it. These objects define the configuration, behavior, and properties of various resources. Here are some of the key Kubernetes objects:
+
+1. **Pod:** The smallest and simplest Kubernetes object, representing one or more containers deployed together on a single node. Pods are co-located and share the same network namespace, allowing containers within the same pod to communicate with each other using `localhost`.
+
+2. **ReplicaSet:** Ensures a specified number of replicas (pods) are running at all times. It helps with scaling and managing identical pod copies.
+
+3. **Deployment:** A higher-level abstraction over ReplicaSets that manages the rollout and updates of ReplicaSets. Deployments are used for declarative updates and rolling back changes.
+
+4. **StatefulSet:** A workload API object used to manage stateful applications, like databases. It ensures that each pod has a stable, unique identity and stable storage across rescheduling.
+
+5. **DaemonSet:** Ensures that a copy of a pod is running on all (or a subset of) nodes in the cluster. It is useful for tasks like log collection, monitoring agents, or network management.
+
+6. **Job:** A one-off or batch task that runs to completion. It creates one or more pods, performs the task, and then terminates the pods.
+
+7. **CronJob:** A scheduler object that creates Jobs on a predefined schedule using cron-like expressions.
+
+8. **Service:** An abstraction that provides networking and load balancing for a set of pods. It enables pods to be addressed with a stable IP address or DNS name.
+
+9. **ConfigMap:** A configuration object used to store non-sensitive data in key-value pairs. ConfigMaps can be used as environment variables or as file mounts in pods.
+
+10. **Secret:** Similar to ConfigMaps but used for storing sensitive data, such as passwords or API keys.
+
+11. **Namespace:** A virtual cluster that provides a way to logically divide and isolate resources within a physical cluster.
+
+12. **PersistentVolume (PV):** A storage resource that exists independently of pods. It is used to provide durable storage for applications.
+
+13. **PersistentVolumeClaim (PVC):** A request for storage by a pod. PVCs bind to PVs to fulfill the storage needs of the pod.
+
+14. **Ingress:** An API object that manages external access to services within a cluster, providing features like load balancing, SSL termination, and routing based on hostnames or paths.
+
+15. **HorizontalPodAutoscaler (HPA):** Automatically scales the number of replicas of a deployment, replica set, or stateful set based on CPU utilization or custom metrics.
+
+16. **ServiceAccount:** An identity used by pods to authenticate with the Kubernetes API. It grants permissions to the pod based on the roles assigned to it.
+
+These are some of the essential Kubernetes objects used to define and manage the desired state of your cluster and applications. Each object serves a specific purpose and contributes to the overall orchestration and management of your containerized workloads.
+
+
+
+
+
+**the other kubernetes objects are**
+
+
+1. **Namespace:** A virtual cluster within a physical cluster that provides a way to divide resources and create logical separation between different projects, teams, or environments.
+
+2. **Role:** Defines a set of permissions (read, write, create, delete, etc.) on specific resources within a namespace. Roles are used with role bindings to grant access to users or service accounts.
+
+3. **RoleBinding:** Binds a role to a user or a group of users, giving them the specified permissions within a namespace.
+
+4. **ClusterRole:** Similar to Role, but it applies globally across the entire cluster, not just within a specific namespace.
+
+5. **ClusterRoleBinding:** Binds a cluster role to a user or a group of users, giving them the specified permissions across the entire cluster.
+
+6. **ServiceAccount:** Provides an identity for pods to authenticate with the Kubernetes API server. Service accounts are associated with roles or cluster roles to define the permissions granted to pods.
+
+7. **ResourceQuota:** Sets limits on resource usage (CPU, memory, storage) within a namespace, preventing resource abuse and ensuring fair allocation.
+
+8. **LimitRange:** Defines default resource requests and limits for containers within a namespace.
+
+9. **NetworkPolicy:** Specifies rules for network access between pods within a namespace, controlling ingress and egress traffic.
+
+10. **PodDisruptionBudget (PDB):** Defines the minimum number of pods required for a deployment, ensuring a certain level of availability during disruptive events.
+
+11. **HorizontalPodAutoscaler (HPA):** Automatically scales the number of replicas of a deployment, replica set, or stateful set based on CPU utilization or custom metrics.
+
+12. **PodSecurityPolicy:** Defines a set of security conditions and constraints that a pod must meet to be scheduled on a node.
+
+13. **StorageClass:** A resource that defines different storage profiles and provisioners for Persistent Volumes.
+
+14. **VolumeSnapshot:** Captures a point-in-time snapshot of a Persistent Volume.
+
+15. **VolumeSnapshotContent:** Represents the actual data and metadata of a VolumeSnapshot.
+
+16. **CSIStorageCapacity:** Provides information about available storage capacity from a CSI (Container Storage Interface) driver.
+
+17. **PodPreset:** Injects additional configuration data (e.g., environment variables, volumes) into pods at creation time.
+
+18. **CustomResourceDefinition (CRD):** Extends Kubernetes' API with custom resource types, allowing users to define their own custom resources.
+
+These additional Kubernetes objects offer even more flexibility and control over the management, security, and performance of your containerized workloads in a Kubernetes cluster.
+
+
+
+
