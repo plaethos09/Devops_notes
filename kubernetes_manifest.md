@@ -621,3 +621,92 @@ kubectl apply -f nginx-loadbalancer-service.yaml
 ```
 
 The Kubernetes API server will create the LoadBalancer Service as specified in the manifest file. Depending on your infrastructure and cloud provider, an external load balancer will be automatically provisioned and direct traffic to the Nginx pods. You can check the status of the Service using `kubectl get services`. External clients can access the Nginx web server through the external IP address provided by the load balancer.
+
+
+
+**CONFIGMAP IN KUBERNETES**
+In Kubernetes, a ConfigMap is an API object used to store configuration data separately from the application's container image. It allows you to decouple configuration details from your application code, making it easier to manage and update configurations without modifying the application itself. ConfigMaps are typically used to store environment variables, command-line arguments, configuration files, or any other settings that your application needs.
+
+ConfigMaps can be used as volumes to inject configuration data into pods at runtime, or they can be used as environment variables or command-line arguments within containers.
+
+Here's a detailed explanation of the components in a ConfigMap manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a ConfigMap, it is typically `v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `ConfigMap`.
+
+3. **metadata**: Contains information about the ConfigMap, including its name and optional labels and annotations.
+
+4. **data**: The data section contains key-value pairs that represent the configuration data to be stored in the ConfigMap.
+
+Now, let's create a simple manifest file for a ConfigMap that stores some application configuration:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-configmap
+data:
+  APP_ENV: production
+  MAX_CONNECTIONS: "1000"
+  LOG_LEVEL: "info"
+```
+
+In this manifest file:
+- We are using the `v1` API version for the ConfigMap.
+- The `kind` is set to `ConfigMap`.
+- Under `metadata`, we provide the name of the ConfigMap as `example-configmap`.
+- In the `data` section:
+  - We define several key-value pairs to represent the application configuration data.
+  - For example, `APP_ENV: production` sets the `APP_ENV` environment variable to `production`.
+  - Similarly, `MAX_CONNECTIONS: "1000"` and `LOG_LEVEL: "info"` set the `MAX_CONNECTIONS` and `LOG_LEVEL` environment variables to integer and string values, respectively.
+
+To create the ConfigMap in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-configmap.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-configmap.yaml
+```
+
+The Kubernetes API server will create the ConfigMap as specified in the manifest file. Once the ConfigMap is created, you can use it to inject configuration data into your pods, either as environment variables or as volumes.
+
+For example, to use the ConfigMap as environment variables in a pod, you can define the `envFrom` field in the pod's manifest:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  containers:
+    - name: example-container
+      image: my-app-image:latest
+      envFrom:
+        - configMapRef:
+            name: example-configmap
+```
+
+In this example, the `example-pod` pod uses the `example-configmap` ConfigMap's data as environment variables in the `example-container` container.
+
+To use the ConfigMap as a volume in a pod, you can define the `volumes` field in the pod's manifest:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  volumes:
+    - name: config-volume
+      configMap:
+        name: example-configmap
+  containers:
+    - name: example-container
+      image: my-app-image:latest
+      volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+```
+
+In this example, the `example-pod` pod mounts the `example-configmap` ConfigMap's data as a volume at the path `/etc/config` inside the `example-container` container.
+
+By using ConfigMaps, you can easily manage and update your application's configurations without modifying the application itself, providing greater flexibility and separation of concerns.
