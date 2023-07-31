@@ -1041,3 +1041,65 @@ As the workload increases, the HPA will gradually scale up the number of replica
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/azure-kubernetes-service-autoscaling-hpa-1.png)
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/azure-kubernetes-service-autoscaling-hpa-2.png)
+
+
+**SERVICE ACCOUNT IN KUBERNETES**
+
+
+In Kubernetes, a ServiceAccount is an API object that provides an identity for pods running in the cluster. It allows pods to authenticate with the Kubernetes API server and access various resources, such as Secrets, ConfigMaps, and other services, with the appropriate permissions.
+
+When a pod is created, it is automatically assigned a default ServiceAccount (usually named "default") unless specified otherwise. The ServiceAccount is associated with a set of Kubernetes RBAC (Role-Based Access Control) rules that define the pod's permissions and what resources it can access.
+
+ServiceAccounts can be used to restrict access to sensitive resources and control which pods can interact with the Kubernetes API server or other cluster services.
+
+Here's a detailed explanation of the components in a ServiceAccount manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a ServiceAccount, it is typically `v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `ServiceAccount`.
+
+3. **metadata**: Contains information about the ServiceAccount, including its name and optional labels and annotations.
+
+4. **automountServiceAccountToken**: (Optional) Specifies whether the service account token should be automatically mounted in the pod. The token allows the pod to authenticate with the Kubernetes API server. If set to `false`, the token will not be mounted in the pod, and the pod won't have access to the Kubernetes API.
+
+Now, let's create a simple manifest file for a ServiceAccount:
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: example-serviceaccount
+automountServiceAccountToken: true
+```
+
+In this manifest file:
+- We are using the `v1` API version for the ServiceAccount.
+- The `kind` is set to `ServiceAccount`.
+- Under `metadata`, we provide the name of the ServiceAccount as `example-serviceaccount`.
+- We set `automountServiceAccountToken` to `true`, indicating that the service account token should be automatically mounted in the pod.
+
+To create the ServiceAccount in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-serviceaccount.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-serviceaccount.yaml
+```
+
+The Kubernetes API server will create the ServiceAccount as specified in the manifest file. Now, you can assign this ServiceAccount to pods by specifying its name in the `spec.serviceAccountName` field of the pod's manifest.
+
+For example, to use the `example-serviceaccount` in a pod:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example-pod
+spec:
+  serviceAccountName: example-serviceaccount
+  containers:
+    - name: example-container
+      image: nginx:latest
+```
+
+In this example, the `example-pod` pod uses the `example-serviceaccount` ServiceAccount to authenticate with the Kubernetes API server and access resources according to the RBAC rules associated with that ServiceAccount.
+
+Using ServiceAccounts with appropriate RBAC policies ensures that your pods have the necessary permissions to perform their intended tasks while maintaining security and access control within the Kubernetes cluster.
