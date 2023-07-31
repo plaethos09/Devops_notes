@@ -48,3 +48,8 @@ In Kubernetes, Services are a fundamental resource used to provide networking an
     Headless: A Headless service is used when you don't need load balancing or a single IP address for the service. It sets up DNS entries for each pod in the service, allowing direct communication with individual pods by their IP address.
 
 It's important to note that the choice of service type depends on the use case and requirements of your application. Additionally, services work together with selectors to determine which pods they target. A selector is a label-based query that identifies the pods associated with the service.
+
+
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%207.47.24%20PM.png)
+
