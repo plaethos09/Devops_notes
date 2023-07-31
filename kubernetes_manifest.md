@@ -1166,3 +1166,59 @@ Using PodDisruptionBudgets helps you ensure that your applications remain availa
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/kjikii2jyfc5z4zncg7y.png)
 
 
+**ROLES IN KUBERNETES**
+
+
+In Kubernetes, a Role is an API object that defines a set of permissions (i.e., rules) within a specific namespace. Roles are used in Role-Based Access Control (RBAC) to grant fine-grained access to resources within the cluster. They allow you to control what actions (e.g., create, read, update, delete) users or service accounts can perform on Kubernetes resources in a particular namespace.
+
+Roles are used to grant permissions within a specific namespace, while ClusterRoles are used to grant permissions across the entire cluster.
+
+Here's a detailed explanation of the components in a Role manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a Role, it is typically `rbac.authorization.k8s.io/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `Role`.
+
+3. **metadata**: Contains information about the Role, including its name and optional labels and annotations.
+
+4. **rules**: The rules section defines the permissions granted by the Role. Each rule specifies a set of API groups, resources, verbs, and (optionally) resource names. The combination of these elements determines the level of access that the Role provides.
+
+Now, let's create a simple manifest file for a Role:
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: example-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get", "list"]
+```
+
+In this manifest file:
+- We are using the `rbac.authorization.k8s.io/v1` API version for the Role.
+- The `kind` is set to `Role`.
+- Under `metadata`, we provide the name of the Role as `example-role`.
+- In the `rules` section:
+  - The first rule grants the `get`, `list`, and `watch` verbs on the `pods` and `services` resources within the empty API group. This means the Role provides read-only access to pods and services in the namespace where it is applied.
+  - The second rule grants the `get` and `list` verbs on the `deployments` resource within the `apps` API group. This means the Role provides read-only access to deployments in the namespace where it is applied.
+
+To create the Role in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-role.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-role.yaml
+```
+
+The Kubernetes API server will create the Role as specified in the manifest file. The Role is now available to be bound to a user or service account within the specific namespace.
+
+To bind the Role to a user or service account, you'll need to create a RoleBinding or ClusterRoleBinding manifest. A RoleBinding associates a Role with a specific user or service account within a namespace, while a ClusterRoleBinding associates a ClusterRole with a user or service account across the entire cluster.
+
+Please note that to use RBAC, your Kubernetes cluster must have RBAC enabled and you need sufficient permissions to create Roles and RoleBindings. Care should be taken when granting permissions to ensure that users or service accounts have appropriate access levels based on their roles and responsibilities within the cluster.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screen-Shot-2020-08-13-at-11.17.56-AM.png)
+
+
