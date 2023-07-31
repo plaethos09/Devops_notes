@@ -49,4 +49,4 @@ kubectl apply -f nginx-pod.yaml
 The Kubernetes API server will create the Pod as specified in the manifest file. You can check the status of the Pod using `kubectl get pods` and access the Nginx web server at the specified port (in this case, port 80).
 
 
-[!alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/module_03_pods.svg)
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/module_03_pods.svg)
