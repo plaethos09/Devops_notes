@@ -278,3 +278,64 @@ kubectl apply -f example-statefulset.yaml
 The Kubernetes API server will create the StatefulSet as specified in the manifest file, which will, in turn, create and manage three replicas of the stateful application. Each pod will have its unique, stable hostname based on the pod's ordinal index. You can check the status of the StatefulSet and its pods using `kubectl get statefulsets` and `kubectl get pods`.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/stateful-set-bp-2.png)
+
+
+**DAEMONSET IN KUBERNETES**
+
+
+In Kubernetes, a DaemonSet is an object that ensures that a copy of a pod is running on all (or a subset of) nodes in the cluster. Unlike Deployments or ReplicaSets, which ensure a specific number of replicas running across the cluster, DaemonSets focus on running one replica of a pod on each node.
+
+DaemonSets are useful for tasks that need to be performed on all or specific nodes, such as log collection, monitoring agents, or network management components. Whenever a new node is added to the cluster, the DaemonSet ensures that the corresponding pod is scheduled and running on that node. Similarly, if a node is removed from the cluster, the DaemonSet will automatically terminate the associated pod.
+
+Here's a detailed explanation of the components in a DaemonSet manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a DaemonSet, it is typically `apps/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `DaemonSet`.
+
+3. **metadata**: Contains information about the DaemonSet, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the DaemonSet, which contains the following key components:
+   - **selector**: A label selector used to match the nodes where the DaemonSet's pods will be scheduled.
+   - **template**: The pod template that specifies the desired configuration for the pods managed by the DaemonSet. It includes specifications for containers, volumes, environment variables, etc.
+
+Now, let's create a simple manifest file for a DaemonSet running an example log collector on all nodes:
+
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-collector-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: log-collector
+  template:
+    metadata:
+      labels:
+        app: log-collector
+    spec:
+      containers:
+        - name: log-collector-container
+          image: my-log-collector-image:latest
+          # Other container configuration such as ports, volumes, etc.
+```
+
+In this manifest file:
+- We are using the `apps/v1` API version for the DaemonSet.
+- The `kind` is set to `DaemonSet`.
+- Under `metadata`, we provide the name of the DaemonSet as `log-collector-daemonset`.
+- In the `spec` section:
+  - The `selector` field defines the label selector used to match the nodes where the DaemonSet's pods will be scheduled. In this case, the selector is `app: log-collector`, which matches the label of the pods defined in the `template`.
+  - The `template` section contains the pod template specification:
+    - We define a single container named `log-collector-container` that runs the `my-log-collector-image:latest` image.
+    - You would typically configure the container with additional settings such as ports, volumes, environment variables, etc., based on the requirements of your log collector.
+
+To create the DaemonSet in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `log-collector-daemonset.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f log-collector-daemonset.yaml
+```
+
+The Kubernetes API server will create the DaemonSet as specified in the manifest file, and it will automatically ensure that a pod of the log collector is scheduled and running on all nodes in the cluster. You can check the status of the DaemonSet and its pods using `kubectl get daemonsets` and `kubectl get pods`.
+
