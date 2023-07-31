@@ -236,4 +236,40 @@ This is not an exhaustive list, and `kubectl` supports many other commands and f
    - `kubectl get service [service-name] -o yaml`: Display the YAML definition of a specific service.
    - `kubectl get ingress [ingress-name] -o yaml`: Display the YAML definition of a specific ingress.
    - `kubectl get networkpolicy [network-policy-name] -o yaml`: Display the YAML definition of a specific network policy.
+  
+
+
+**Kubectl storage commands**
+
+
+1. Storage Concepts:
+   - **Persistent Volume (PV)**: A cluster-wide storage resource provisioned by an administrator.
+   - **Persistent Volume Claim (PVC)**: A request for storage by a user that binds to a PV.
+   - **Storage Class**: An object that defines the provisioner and parameters for dynamically provisioning PVs.
+   - **StatefulSet**: A higher-level controller that manages the deployment and scaling of pods with unique identities and persistent storage requirements.
+
+2. Get information about storage resources:
+   - `kubectl get pv`: List all persistent volumes in the cluster.
+   - `kubectl get pvc`: List all persistent volume claims in the current namespace.
+   - `kubectl get storageclass`: List all storage classes available in the cluster.
+
+3. Describe storage resources:
+   - `kubectl describe pv [pv-name]`: Show detailed information about a specific persistent volume.
+   - `kubectl describe pvc [pvc-name]`: Show detailed information about a specific persistent volume claim.
+
+4. Create or apply storage resources:
+   - `kubectl create -f [pv-definition.yaml]`: Create a persistent volume from a YAML file.
+   - `kubectl apply -f [pv-definition.yaml]`: Create or update a persistent volume using a YAML file.
+   - `kubectl create -f [pvc-definition.yaml]`: Create a persistent volume claim from a YAML file.
+   - `kubectl apply -f [pvc-definition.yaml]`: Create or update a persistent volume claim using a YAML file.
+
+5. Delete storage resources:
+   - `kubectl delete pv [pv-name]`: Delete a specific persistent volume.
+   - `kubectl delete pvc [pvc-name]`: Delete a specific persistent volume claim.
+
+6. View the YAML definition of storage resources:
+   - `kubectl get pv [pv-name] -o yaml`: Display the YAML definition of a specific persistent volume.
+   - `kubectl get pvc [pvc-name] -o yaml`: Display the YAML definition of a specific persistent volume claim.
+
+
 
