@@ -457,3 +457,5 @@ kubectl apply -f nginx-service.yaml
 ```
 
 The Kubernetes API server will create the Service as specified in the manifest file, providing a stable internal IP address to access the Nginx pods. You can check the status of the Service using `kubectl get services`.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.52.10%20PM.png)
