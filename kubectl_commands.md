@@ -109,3 +109,31 @@ This is not an exhaustive list, and `kubectl` supports many other commands and f
    - `kubectl get pod [pod-name] -o yaml`: Display the YAML definition of a specific pod.
 
 
+
+
+**Kubectl node commands**
+
+
+
+1. Get information about nodes:
+   - `kubectl get nodes`: List all nodes in the cluster.
+   - `kubectl get nodes -o wide`: List nodes with additional information like internal IP, external IP, and container runtime version.
+
+2. Describe a specific node:
+   - `kubectl describe node [node-name]`: Show detailed information about a specific node, including its status, capacity, allocated resources, and more.
+
+3. Cordon and Uncordon a node:
+   - `kubectl cordon [node-name]`: Mark a node as unschedulable. New pods won't be scheduled on this node, but existing pods continue running.
+   - `kubectl uncordon [node-name]`: Mark a node as schedulable. Allow new pods to be scheduled on this node.
+
+4. Drain a node:
+   - `kubectl drain [node-name]`: Safely evict all pods (except mirror pods) from a node and mark it as unschedulable. This is useful when you need to perform maintenance on a node.
+
+5. Taint and Untaint a node:
+   - `kubectl taint nodes [node-name] key=value:taint-effect`: Add a taint to a node. Taints allow nodes to repel certain pods.
+   - `kubectl taint nodes [node-name] key-`: Remove a taint from a node.
+
+6. View the YAML definition of a node:
+   - `kubectl get node [node-name] -o yaml`: Display the YAML definition of a specific node.
+
+
