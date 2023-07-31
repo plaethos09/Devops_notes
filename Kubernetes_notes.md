@@ -31,3 +31,20 @@ Kubernetes is an open-source container orchestration platform that automates the
 These are some of the fundamental concepts of Kubernetes. Kubernetes offers many more features and advanced concepts to manage containerized applications effectively, such as volumes, secrets, ingress, stateful sets, and more.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/kube_arch.png)
+
+
+**what are the basic services of kubernetes**
+
+In Kubernetes, Services are a fundamental resource used to provide networking and load balancing capabilities to pods running within the cluster. They act as an abstraction layer to expose applications and make them accessible to other services or external users. There are several types of basic services in Kubernetes:
+
+    ClusterIP: This is the default type of service. It exposes the service on an internal IP address within the cluster. The service is only accessible from within the cluster, making it suitable for internal communication between pods.
+
+    NodePort: A NodePort service exposes the service on a static port on each node's IP address. This means that the service can be accessed from outside the cluster by using any node's IP and the NodePort. It is commonly used for development and testing purposes.
+
+    LoadBalancer: A LoadBalancer service provisions an external load balancer in cloud environments (e.g., AWS ELB, GCP Load Balancer, Azure Load Balancer) to distribute incoming traffic across the pods in the service. This allows external users to access the service without directly interacting with individual nodes.
+
+    ExternalName: An ExternalName service is a special type that does not create any load balancer or proxy. Instead, it maps the service to an external DNS name, effectively acting as a DNS CNAME record. It is used to provide access to services that exist outside the cluster.
+
+    Headless: A Headless service is used when you don't need load balancing or a single IP address for the service. It sets up DNS entries for each pod in the service, allowing direct communication with individual pods by their IP address.
+
+It's important to note that the choice of service type depends on the use case and requirements of your application. Additionally, services work together with selectors to determine which pods they target. A selector is a label-based query that identifies the pods associated with the service.
