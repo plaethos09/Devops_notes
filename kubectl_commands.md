@@ -172,5 +172,29 @@ This is not an exhaustive list, and `kubectl` supports many other commands and f
 8. View the YAML definition of a deployment:
    - `kubectl get deployment [deployment-name] -o yaml`: Display the YAML definition of a specific deployment.
 
+**Kubectl namespace commands**
+
+
+
+1. Get information about namespaces:
+   - `kubectl get namespaces`: List all namespaces in the cluster.
+
+2. Describe a specific namespace:
+   - `kubectl describe namespace [namespace-name]`: Show detailed information about a specific namespace, including its status, labels, and annotations.
+
+3. Create or apply a namespace:
+   - `kubectl create namespace [namespace-name]`: Create a new namespace.
+   - `kubectl apply -f [namespace-definition.yaml]`: Create or update a namespace using a YAML file.
+
+4. Delete a namespace:
+   - `kubectl delete namespace [namespace-name]`: Delete a specific namespace and all the resources within it.
+   - `kubectl delete namespaces --all`: Delete all namespaces in the cluster. (Be cautious when using this command as it can lead to data loss.)
+
+5. Set or change the current namespace:
+   - `kubectl config set-context --current --namespace=[namespace-name]`: Set the current namespace for the current context.
+
+6. View the YAML definition of a namespace:
+   - `kubectl get namespace [namespace-name] -o yaml`: Display the YAML definition of a specific namespace.
+
 
 
