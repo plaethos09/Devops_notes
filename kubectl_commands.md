@@ -197,4 +197,43 @@ This is not an exhaustive list, and `kubectl` supports many other commands and f
    - `kubectl get namespace [namespace-name] -o yaml`: Display the YAML definition of a specific namespace.
 
 
+**kubectl network commands**
+
+
+
+1. Networking Concepts:
+   - **Pod**: The basic unit in Kubernetes. Multiple containers within a pod share the same network namespace.
+   - **Service**: An abstraction that defines a set of pods and enables network communication between them.
+   - **Ingress**: An API object that manages external access to services within the cluster.
+   - **NetworkPolicy**: An API object to control the traffic flow between pods using rules.
+
+2. Get information about networking resources:
+   - `kubectl get services`: List all services in the current namespace.
+   - `kubectl get services --all-namespaces`: List all services in all namespaces.
+   - `kubectl get pods --selector=[selector]`: List pods filtered by a label selector.
+   - `kubectl get ingress`: List all ingresses in the current namespace.
+   - `kubectl get networkpolicy`: List all network policies in the current namespace.
+
+3. Describe networking resources:
+   - `kubectl describe service [service-name]`: Show detailed information about a specific service.
+   - `kubectl describe ingress [ingress-name]`: Show detailed information about a specific ingress.
+   - `kubectl describe networkpolicy [network-policy-name]`: Show detailed information about a specific network policy.
+
+4. Create or apply networking resources:
+   - `kubectl create -f [service-definition.yaml]`: Create a service from a YAML file.
+   - `kubectl apply -f [service-definition.yaml]`: Create or update a service using a YAML file.
+   - `kubectl create -f [ingress-definition.yaml]`: Create an ingress from a YAML file.
+   - `kubectl apply -f [ingress-definition.yaml]`: Create or update an ingress using a YAML file.
+   - `kubectl create -f [network-policy-definition.yaml]`: Create a network policy from a YAML file.
+   - `kubectl apply -f [network-policy-definition.yaml]`: Create or update a network policy using a YAML file.
+
+5. Delete networking resources:
+   - `kubectl delete service [service-name]`: Delete a specific service.
+   - `kubectl delete ingress [ingress-name]`: Delete a specific ingress.
+   - `kubectl delete networkpolicy [network-policy-name]`: Delete a specific network policy.
+
+6. View the YAML definition of networking resources:
+   - `kubectl get service [service-name] -o yaml`: Display the YAML definition of a specific service.
+   - `kubectl get ingress [ingress-name] -o yaml`: Display the YAML definition of a specific ingress.
+   - `kubectl get networkpolicy [network-policy-name] -o yaml`: Display the YAML definition of a specific network policy.
 
