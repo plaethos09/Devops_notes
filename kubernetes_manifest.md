@@ -1103,3 +1103,5 @@ spec:
 In this example, the `example-pod` pod uses the `example-serviceaccount` ServiceAccount to authenticate with the Kubernetes API server and access resources according to the RBAC rules associated with that ServiceAccount.
 
 Using ServiceAccounts with appropriate RBAC policies ensures that your pods have the necessary permissions to perform their intended tasks while maintaining security and access control within the Kubernetes cluster.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/1%202Q3SrPsBgNjwvE25b0SgYA.png)
