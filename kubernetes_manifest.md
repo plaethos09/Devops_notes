@@ -833,3 +833,75 @@ kubectl apply -f example-pvc.yaml
 The Kubernetes API server will create the PersistentVolumeClaim as specified in the manifest file. Kubernetes will then try to find an available PersistentVolume that satisfies the PVC's requirements. If a suitable PV is found, the PVC will be bound to that PV, and the pod can use the PVC as a volume to store data. If there is no suitable PV available, the PVC will remain in a pending state until an appropriate PV becomes available.
 
 Please note that the PV that matches the PVC's requirements must be provisioned beforehand, either statically by a cluster administrator or dynamically using a StorageClass. Additionally, PVs are specific to a cluster, so a PVC created in one cluster cannot bind to PVs from another cluster.
+
+
+**NAMESPACE IN KUBERNETES**
+
+In Kubernetes, a Namespace is a virtual cluster within a physical cluster that provides a way to partition and isolate resources. It allows you to create separate logical environments, projects, or teams within the same Kubernetes cluster. Namespaces help avoid naming conflicts, manage access control, and organize resources more effectively.
+
+By default, Kubernetes creates a few system namespaces, such as `default`, `kube-system`, and `kube-public`, but you can create custom namespaces for your applications and services. Resources (like pods, services, deployments, etc.) are associated with a specific namespace, and other resources within the same namespace can access them without specifying the namespace explicitly.
+
+Here's a detailed explanation of the components in a Namespace manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a Namespace, it is typically `v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `Namespace`.
+
+3. **metadata**: Contains information about the Namespace, including its name and optional labels and annotations.
+
+Now, let's create a simple manifest file for a Namespace:
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example-namespace
+```
+
+In this manifest file:
+- We are using the `v1` API version for the Namespace.
+- The `kind` is set to `Namespace`.
+- Under `metadata`, we provide the name of the Namespace as `example-namespace`.
+
+To create the Namespace in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-namespace.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-namespace.yaml
+```
+
+The Kubernetes API server will create the Namespace as specified in the manifest file. You can verify the creation of the Namespace using the `kubectl get namespaces` command:
+
+```bash
+kubectl get namespaces
+```
+
+The output should show the list of available namespaces, including the one you just created (`example-namespace`).
+
+Once the Namespace is created, you can create other Kubernetes resources (pods, services, deployments, etc.) within this Namespace. When creating resources, you can specify the Namespace in the metadata section, and those resources will belong to that Namespace.
+
+For example, to create a simple Nginx deployment within the `example-namespace`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: example-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:latest
+```
+
+In this example, we added a `namespace: example-namespace` field under the `metadata` section of the Deployment manifest, specifying that this Deployment should be created within the `example-namespace` Namespace.
+
+By using Namespaces, you can organize resources and manage access control more effectively, especially in multi-team or multi-application Kubernetes clusters.
