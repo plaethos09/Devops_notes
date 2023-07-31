@@ -276,3 +276,5 @@ kubectl apply -f example-statefulset.yaml
 ```
 
 The Kubernetes API server will create the StatefulSet as specified in the manifest file, which will, in turn, create and manage three replicas of the stateful application. Each pod will have its unique, stable hostname based on the pod's ordinal index. You can check the status of the StatefulSet and its pods using `kubectl get statefulsets` and `kubectl get pods`.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/stateful-set-bp-2.png)
