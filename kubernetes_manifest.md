@@ -118,3 +118,68 @@ kubectl apply -f nginx-deployment.yaml
 The Kubernetes API server will create the Deployment as specified in the manifest file, which will, in turn, create and manage two replicas of the Nginx pod. You can check the status of the Deployment and its replicas using `kubectl get deployments` and `kubectl get pods`.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/07751442-deployment.png)
+
+**REPLICASETS IN KUBERNETES**
+
+In Kubernetes, a ReplicaSet is an object that ensures a specified number of replicas (pods) are running at all times. It is a lower-level abstraction than Deployments but serves a similar purpose. ReplicaSets are useful when you need fine-grained control over the number of replicas, rolling updates, or managing multiple versions of the same pod template.
+
+ReplicaSets continuously monitor the number of running pods and automatically adjust the pod count to match the desired state. If a pod fails or gets deleted, the ReplicaSet creates a new pod to replace it, ensuring that the desired number of replicas is always maintained.
+
+Here's a detailed explanation of the components in a ReplicaSet manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a ReplicaSet, it is typically `apps/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `ReplicaSet`.
+
+3. **metadata**: Contains information about the ReplicaSet, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the ReplicaSet, which contains the following key components:
+   - **replicas**: The desired number of replicas (pods) to maintain. This determines the number of replicas that the ReplicaSet will create and maintain.
+   - **selector**: A label selector used to match the pods controlled by this ReplicaSet. The selector is used to identify which pods the ReplicaSet is responsible for.
+   - **template**: The pod template that specifies the desired configuration for the pods controlled by this ReplicaSet. It includes specifications for containers, volumes, environment variables, etc.
+
+Now, let's create a simple manifest file for a ReplicaSet running an Nginx web server with two replicas:
+
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-replicaset
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+```
+
+In this manifest file:
+- We are using the `apps/v1` API version for the ReplicaSet.
+- The `kind` is set to `ReplicaSet`.
+- Under `metadata`, we provide the name of the ReplicaSet as `nginx-replicaset`.
+- In the `spec` section:
+  - We specify that we want to have 2 replicas (`replicas: 2`) of the pod managed by this ReplicaSet.
+  - The `selector` field defines the label selector used to match the pods controlled by this ReplicaSet. In this case, the selector is `app: nginx`, which matches the label of the pods defined in the `template`.
+  - The `template` section contains the pod template specification:
+    - We define a single container named `nginx-container` that runs the `nginx:latest` image.
+    - The container exposes port 80 using the `containerPort` field.
+    - The pod is labeled with `app: nginx`, which matches the selector defined in the `selector` field.
+
+To create the ReplicaSet in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `nginx-replicaset.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f nginx-replicaset.yaml
+```
+
+The Kubernetes API server will create the ReplicaSet as specified in the manifest file, which will, in turn, create and manage two replicas of the Nginx pod. You can check the status of the ReplicaSet and its replicas using `kubectl get replicasets` and `kubectl get pods`.
+
+[]
