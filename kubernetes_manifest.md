@@ -780,3 +780,56 @@ kubectl apply -f example-pv.yaml
 The Kubernetes API server will create the PersistentVolume as specified in the manifest file. This PersistentVolume is now available for consumption by creating PersistentVolumeClaims (PVCs) that request storage with specific access modes and capacity requirements.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-08-01%20at%2012.17.08%20AM.png)
+
+
+**PERSISTANTVOLUMECLAIM IN KUBERNETES**
+
+In Kubernetes, a PersistentVolumeClaim (PVC) is a request for storage by a user or application. It is a way for pods to dynamically request and use PersistentVolumes (PVs) without having to be concerned with the underlying storage details. PVCs allow you to decouple storage requirements from the pod specification, making it easier to manage and scale storage independently.
+
+When a PVC is created, Kubernetes tries to find an available PersistentVolume that satisfies the PVC's storage requirements, access mode, and other specified criteria. Once the PVC is bound to a PV, the pod can use the PVC as a volume to store data.
+
+Here's a detailed explanation of the components in a PersistentVolumeClaim manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a PersistentVolumeClaim, it is typically `v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `PersistentVolumeClaim`.
+
+3. **metadata**: Contains information about the PersistentVolumeClaim, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the PersistentVolumeClaim, which contains the following key components:
+   - **accessModes**: The access modes specify how the pod can use the PersistentVolume. Common access modes include `ReadWriteOnce` (can be mounted by a single node as read-write), `ReadOnlyMany` (can be mounted by multiple nodes as read-only), and `ReadWriteMany` (can be mounted by multiple nodes as read-write).
+   - **resources**: Specifies the storage requirements for the PersistentVolumeClaim, including the requested storage capacity.
+
+Now, let's create a simple manifest file for a PersistentVolumeClaim that requests 1Gi of storage with ReadWriteOnce access mode:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: example-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```
+
+In this manifest file:
+- We are using the `v1` API version for the PersistentVolumeClaim.
+- The `kind` is set to `PersistentVolumeClaim`.
+- Under `metadata`, we provide the name of the PersistentVolumeClaim as `example-pvc`.
+- In the `spec` section:
+  - The `accessModes` field specifies that the PersistentVolumeClaim can be mounted as ReadWriteOnce, meaning it can be mounted by a single node for read-write access.
+  - The `resources` section specifies the storage requirements for the PersistentVolumeClaim:
+    - We define a request for storage of 1Gi.
+
+To create the PersistentVolumeClaim in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-pvc.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-pvc.yaml
+```
+
+The Kubernetes API server will create the PersistentVolumeClaim as specified in the manifest file. Kubernetes will then try to find an available PersistentVolume that satisfies the PVC's requirements. If a suitable PV is found, the PVC will be bound to that PV, and the pod can use the PVC as a volume to store data. If there is no suitable PV available, the PVC will remain in a pending state until an appropriate PV becomes available.
+
+Please note that the PV that matches the PVC's requirements must be provisioned beforehand, either statically by a cluster administrator or dynamically using a StorageClass. Additionally, PVs are specific to a cluster, so a PVC created in one cluster cannot bind to PVs from another cluster.
