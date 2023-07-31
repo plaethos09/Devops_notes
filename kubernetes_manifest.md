@@ -1039,3 +1039,5 @@ The Kubernetes API server will create the HorizontalPodAutoscaler as specified i
 As the workload increases, the HPA will gradually scale up the number of replicas, and when the load decreases, it will scale down the replicas to match the desired CPU utilization target. Automatic scaling helps ensure that your application can handle varying levels of demand while optimizing resource utilization.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/azure-kubernetes-service-autoscaling-hpa-1.png)
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/azure-kubernetes-service-autoscaling-hpa-2.png)
