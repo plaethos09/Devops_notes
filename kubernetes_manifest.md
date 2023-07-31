@@ -1158,3 +1158,5 @@ kubectl apply -f example-pdb.yaml
 The Kubernetes API server will create the PodDisruptionBudget as specified in the manifest file. The PDB will enforce that during voluntary disruptions, such as scaling down a deployment or draining nodes, at least two replicas of the pods labeled with `app: example-app` are available at all times.
 
 Using PodDisruptionBudgets helps you ensure that your applications remain available and reliable even during maintenance operations or disruptions, reducing the risk of downtime and service outages.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/zyrz9hdtm0rv3omg264n.png)
