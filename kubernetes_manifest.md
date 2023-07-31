@@ -189,4 +189,5 @@ One of the biggest reasons that we don’t deploy naked pods in production is th
 
 Replica Sets are a level above pods that ensures a certain number of pods are always running. A Replica Set allows you to define the number of pods that need to be running at all times and this number could be “1”. If a pod crashes, it will be recreated to get back to the desired state. For this reason, replica sets are preferred over a naked pod because they provide some high availability.
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.25.42%20PM.png)
-https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.25.42%20PM.png
+
+If one of the pods thats is part of a replica set crashes, one will be created to take its place.
