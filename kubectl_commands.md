@@ -136,4 +136,41 @@ This is not an exhaustive list, and `kubectl` supports many other commands and f
 6. View the YAML definition of a node:
    - `kubectl get node [node-name] -o yaml`: Display the YAML definition of a specific node.
 
+**kubectl deployment commands**
+
+
+
+1. Get information about deployments:
+   - `kubectl get deployments`: List all deployments in the current namespace.
+   - `kubectl get deployments --all-namespaces`: List all deployments in all namespaces.
+   - `kubectl get deployments -o wide`: List deployments with additional information like replicas, labels, and selectors.
+
+2. Describe a specific deployment:
+   - `kubectl describe deployment [deployment-name]`: Show detailed information about a specific deployment, including its replicas, available replicas, labels, and events.
+
+3. Create or apply a deployment:
+   - `kubectl create -f [deployment-definition.yaml]`: Create a deployment from a YAML file.
+   - `kubectl apply -f [deployment-definition.yaml]`: Create or update a deployment using a YAML file.
+   - `kubectl apply -f [deployment-definition.yaml] --record`: Create or update a deployment and record the change in the revision history.
+
+4. Delete a deployment:
+   - `kubectl delete deployment [deployment-name]`: Delete a specific deployment.
+   - `kubectl delete deployments --all`: Delete all deployments in the current namespace.
+
+5. Scale a deployment:
+   - `kubectl scale deployment [deployment-name] --replicas=[replica-count]`: Scale the number of replicas for a deployment.
+
+6. Expose a deployment as a service:
+   - `kubectl expose deployment [deployment-name] --port=[port] --target-port=[target-port] --type=[service-type]`: Expose a deployment as a service, making it accessible to other pods inside or outside the cluster.
+
+7. Rolling update and rollback:
+   - `kubectl set image deployment [deployment-name] [container-name]=<new-image>`: Update the container image used by the deployment.
+   - `kubectl rollout status deployment [deployment-name]`: Check the status of a rollout.
+   - `kubectl rollout history deployment [deployment-name]`: View revision history of a deployment.
+   - `kubectl rollout undo deployment [deployment-name]`: Rollback to the previous revision of a deployment.
+
+8. View the YAML definition of a deployment:
+   - `kubectl get deployment [deployment-name] -o yaml`: Display the YAML definition of a specific deployment.
+
+
 
