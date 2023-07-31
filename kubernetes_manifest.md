@@ -715,3 +715,66 @@ In this example, the `example-pod` pod mounts the `example-configmap` ConfigMap'
 By using ConfigMaps, you can easily manage and update your application's configurations without modifying the application itself, providing greater flexibility and separation of concerns.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-08-01%20at%2012.10.06%20AM.png)
+
+
+**PERSISTANT VOLUME IN KUBERNETES**
+
+
+In Kubernetes, a PersistentVolume (PV) is a storage resource in the cluster that has a lifecycle independent of any individual pod. PVs provide a way to decouple storage from pods, allowing the data to persist even if the pod that uses it is deleted or rescheduled to a different node. PVs are used to provide storage to applications that require durable data storage, such as databases or file systems.
+
+PersistentVolumes are provisioned by cluster administrators and are then available for consumption by users or applications via PersistentVolumeClaims (PVCs). PVCs act as a request for storage with specific requirements, and they are bound to available PVs that meet the requested criteria.
+
+Here's a detailed explanation of the components in a PersistentVolume manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a PersistentVolume, it is typically `v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `PersistentVolume`.
+
+3. **metadata**: Contains information about the PersistentVolume, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the PersistentVolume, which contains the following key components:
+   - **capacity**: The size of the storage that the PersistentVolume offers.
+   - **accessModes**: The access modes specify how the volume can be mounted by pods. Common access modes include `ReadWriteOnce` (can be mounted by a single node as read-write), `ReadOnlyMany` (can be mounted by multiple nodes as read-only), and `ReadWriteMany` (can be mounted by multiple nodes as read-write).
+   - **persistentVolumeReclaimPolicy**: Defines what happens to the PersistentVolume when it is released by the user. Common policies include `Retain` (the volume is retained and must be manually reclaimed), `Recycle` (data is removed, and the volume can be reused), and `Delete` (the underlying storage asset is deleted).
+   - **storageClassName**: A way to dynamically provision PersistentVolumes using StorageClasses. This field is optional and is used to match the PVC's `storageClassName`.
+   - **volumeMode**: Specifies whether the PersistentVolume is formatted with a file system (`Filesystem`) or it's raw block storage (`Block`).
+   - **persistentVolumeSource**: Specifies the source of the volume. It can be either an `awsElasticBlockStore` (for AWS EBS volumes), `azureDisk` (for Azure Disk volumes), `csi` (for volumes provisioned by a CSI driver), `hostPath` (for using the local node's filesystem), or other volume types supported by Kubernetes.
+
+Now, let's create a simple manifest file for a PersistentVolume using `hostPath` as the volume source:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  volumeMode: Filesystem
+  hostPath:
+    path: /data/persistent_volume
+```
+
+In this manifest file:
+- We are using the `v1` API version for the PersistentVolume.
+- The `kind` is set to `PersistentVolume`.
+- Under `metadata`, we provide the name of the PersistentVolume as `example-pv`.
+- In the `spec` section:
+  - The `capacity` field specifies that the volume has a capacity of 1Gi.
+  - The `accessModes` field specifies that the volume can be mounted as ReadWriteOnce, meaning it can be mounted by a single node for read-write access.
+  - The `persistentVolumeReclaimPolicy` is set to `Retain`, which means the volume will be retained after it is released by the user and must be manually reclaimed.
+  - The `storageClassName` is set to an empty string, indicating that no StorageClass is used for dynamic provisioning.
+  - The `volumeMode` is set to `Filesystem`, indicating that the volume is formatted with a file system.
+  - The `hostPath` field specifies that the volume source is a directory on the local node's filesystem located at `/data/persistent_volume`.
+
+To create the PersistentVolume in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-pv.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-pv.yaml
+```
+
+The Kubernetes API server will create the PersistentVolume as specified in the manifest file. This PersistentVolume is now available for consumption by creating PersistentVolumeClaims (PVCs) that request storage with specific access modes and capacity requirements.
