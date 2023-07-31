@@ -459,3 +459,58 @@ kubectl apply -f nginx-service.yaml
 The Kubernetes API server will create the Service as specified in the manifest file, providing a stable internal IP address to access the Nginx pods. You can check the status of the Service using `kubectl get services`.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-07-31%20at%2011.52.10%20PM.png)
+
+**NODE PORT IN THE KUBERNETES**
+
+In Kubernetes, a NodePort is a type of Service that exposes a specific port on each node in the cluster. It allows external traffic to reach services running inside the cluster by forwarding traffic from a port on the nodes to the Service's port. NodePort Services are typically used to make services accessible from outside the cluster, enabling external clients to reach applications running on the cluster's nodes.
+
+Here's a detailed explanation of the components in a NodePort Service manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a Service, it is typically `v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `Service`.
+
+3. **metadata**: Contains information about the Service, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the Service, which contains the following key components:
+   - **selector**: A label selector used to match the pods that the Service will route traffic to.
+   - **type**: The type of Service. For a NodePort Service, it should be set to `NodePort`.
+   - **ports**: The ports configuration for the Service, which defines the ports on which the Service listens and forwards traffic to the pods. In a NodePort Service, one of the ports should have `nodePort` defined to specify the port on the nodes where the Service will be exposed.
+
+Now, let's create a simple manifest file for a NodePort Service that exposes an Nginx web server:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-nodeport-service
+spec:
+  selector:
+    app: nginx
+  type: NodePort
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080
+```
+
+In this manifest file:
+- We are using the `v1` API version for the Service.
+- The `kind` is set to `Service`.
+- Under `metadata`, we provide the name of the Service as `nginx-nodeport-service`.
+- In the `spec` section:
+  - The `selector` field defines the label selector used to match the pods to which the Service will route traffic. In this case, the selector is `app: nginx`, which means the Service will forward traffic to pods labeled with `app: nginx`.
+  - The `type` is set to `NodePort`, which makes it a NodePort Service.
+  - The `ports` section defines the ports configuration for the Service:
+    - We define a single port named `http` that listens on TCP port 80 and forwards traffic to the target port 80 of the pods.
+    - The `nodePort` is set to `30080`, which means the Service will be exposed on port 30080 on each node.
+
+To create the NodePort Service in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `nginx-nodeport-service.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f nginx-nodeport-service.yaml
+```
+
+The Kubernetes API server will create the NodePort Service as specified in the manifest file, exposing the Nginx pods on port 30080 on each node in the cluster. You can check the status of the Service using `kubectl get services`. External clients can access the Nginx web server by reaching any node's IP address on port 30080.
