@@ -907,3 +907,73 @@ In this example, we added a `namespace: example-namespace` field under the `meta
 By using Namespaces, you can organize resources and manage access control more effectively, especially in multi-team or multi-application Kubernetes clusters.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/azure-kubernetes-service-namespaces-2.png)
+
+
+**INGRESS IN KUBERNETES**
+
+
+In Kubernetes, an Ingress is an API object that manages external access to services within the cluster. It acts as a reverse proxy, forwarding incoming requests from external clients to the appropriate services based on rules defined in the Ingress resource. In other words, Ingress allows you to define a set of routing rules to map external URLs to internal services, providing a way to access multiple services using a single external IP address.
+
+Ingress resources work with Ingress Controllers, which are components responsible for implementing the actual load balancing and routing based on the Ingress rules. Ingress Controllers can be provided by Kubernetes itself (e.g., Nginx Ingress Controller, Traefik Ingress Controller) or by cloud providers (e.g., GKE Ingress, AWS ALB Ingress).
+
+Here's a detailed explanation of the components in an Ingress manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For an Ingress, it is typically `networking.k8s.io/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `Ingress`.
+
+3. **metadata**: Contains information about the Ingress, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the Ingress, which contains the following key components:
+   - **rules**: The rules section defines the routing rules for incoming requests. Each rule specifies a host (optional) and a set of paths that are forwarded to a specific backend service.
+   - **tls**: The TLS section is optional and is used to configure HTTPS termination for the Ingress, providing a way to secure traffic to the backend services using TLS certificates.
+
+Now, let's create a simple manifest file for an Ingress that routes incoming requests to an Nginx service:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: example-ingress
+spec:
+  rules:
+    - host: example.com
+      http:
+        paths:
+          - path: /app1
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service1
+                port:
+                  number: 80
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service2
+                port:
+                  number: 80
+```
+
+In this manifest file:
+- We are using the `networking.k8s.io/v1` API version for the Ingress.
+- The `kind` is set to `Ingress`.
+- Under `metadata`, we provide the name of the Ingress as `example-ingress`.
+- In the `spec` section:
+  - The `rules` field defines the routing rules for incoming requests:
+    - We specify a single rule that listens for requests with the `Host` header set to `example.com`.
+    - The `http` section defines the HTTP routing rules:
+      - We define two paths: `/app1` and `/app2`, which will be forwarded to the respective backend services.
+      - The `pathType` is set to `Prefix`, meaning the paths `/app1` and `/app2` will match URLs that start with `/app1` and `/app2`, respectively.
+      - For each path, we define the backend service to which the requests will be forwarded. In this example, `nginx-service1` and `nginx-service2` are two different backend services.
+
+To create the Ingress in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-ingress.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-ingress.yaml
+```
+
+The Kubernetes API server will create the Ingress as specified in the manifest file. The Ingress Controller (e.g., Nginx Ingress Controller) will process the Ingress rules and configure the load balancer to route incoming requests to the appropriate backend services based on the defined rules.
+
+Please note that for the Ingress to work, you need to have a running Ingress Controller in your cluster that supports and understands the Ingress resource. The actual implementation of the Ingress rules depends on the specific Ingress Controller you are using.
