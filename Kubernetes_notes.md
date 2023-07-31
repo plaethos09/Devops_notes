@@ -212,3 +212,44 @@ Using declarative configuration files provides better visibility, auditability, 
 
 
 
+
+
+
+
+**what is a manifest files in kubernetes**
+
+
+In Kubernetes, a manifest file refers to a YAML or JSON configuration file that defines the desired state of Kubernetes resources. These files contain specifications for various Kubernetes objects such as pods, services, deployments, replica sets, and more. Manifest files are used in the declarative approach to managing Kubernetes resources.
+
+The term "manifest file" is commonly used to describe the configuration files that you apply to the Kubernetes cluster using `kubectl apply` or other Kubernetes management tools. These files encapsulate the desired configuration, including the resource type, metadata (name, labels, annotations), and the resource's specifications (e.g., container images, ports, volumes, environment variables, etc.).
+
+Here's an example of a simple Pod manifest file in YAML format:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx:latest
+```
+
+This manifest file defines a Kubernetes Pod named "my-pod" running a single container with the latest version of the Nginx image.
+
+To create or update the Kubernetes resources defined in the manifest file, you use the `kubectl apply` command:
+
+```bash
+kubectl apply -f pod.yaml
+```
+
+The Kubernetes API server receives the manifest file and processes it to create or update the specified resources in the cluster to match the desired state. If the resources already exist, `kubectl apply` will update them according to the configuration provided in the manifest file.
+
+Manifest files allow you to manage Kubernetes resources in a declarative manner, where you specify what you want the state of the cluster to be, rather than providing step-by-step instructions on how to achieve that state. This declarative approach is preferred because it makes it easier to manage, version control, and reproduce the desired state of your Kubernetes resources, especially in a production environment.
+
+
+
+
+
+
