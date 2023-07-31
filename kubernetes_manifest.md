@@ -979,3 +979,61 @@ The Kubernetes API server will create the Ingress as specified in the manifest f
 Please note that for the Ingress to work, you need to have a running Ingress Controller in your cluster that supports and understands the Ingress resource. The actual implementation of the Ingress rules depends on the specific Ingress Controller you are using.
 
 ![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/ingress-fanout.png)
+
+
+
+**HorizontalPodAutoscaler IN KUBERNETES**
+
+
+In Kubernetes, a HorizontalPodAutoscaler (HPA) is an API object that automatically adjusts the number of replicas of a Deployment, ReplicaSet, or StatefulSet based on observed CPU utilization or custom metrics. The HPA ensures that the desired number of pods are running to handle varying levels of workload, thus enabling automatic scaling of your application.
+
+Here's a detailed explanation of the components in a HorizontalPodAutoscaler manifest:
+
+1. **apiVersion**: The version of the Kubernetes API that the manifest is written for. For a HorizontalPodAutoscaler, it is typically `autoscaling/v1`.
+
+2. **kind**: Specifies the type of resource being defined, which, in this case, is `HorizontalPodAutoscaler`.
+
+3. **metadata**: Contains information about the HorizontalPodAutoscaler, including its name and optional labels and annotations.
+
+4. **spec**: The specification of the HorizontalPodAutoscaler, which contains the following key components:
+   - **scaleTargetRef**: Specifies the target Deployment, ReplicaSet, or StatefulSet that should be scaled by the HPA. You need to provide the `apiVersion`, `kind`, and `name` of the target resource.
+   - **minReplicas**: The minimum number of replicas that the HPA should maintain. It is recommended to set this value to at least 1.
+   - **maxReplicas**: The maximum number of replicas that the HPA can scale up to in response to increased load.
+   - **targetCPUUtilizationPercentage**: The target average CPU utilization across all pods. The HPA will try to maintain this utilization percentage by adjusting the number of replicas.
+
+Now, let's create a simple manifest file for a HorizontalPodAutoscaler that scales a Deployment based on CPU utilization:
+
+```yaml
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: example-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: example-deployment
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
+```
+
+In this manifest file:
+- We are using the `autoscaling/v1` API version for the HorizontalPodAutoscaler.
+- The `kind` is set to `HorizontalPodAutoscaler`.
+- Under `metadata`, we provide the name of the HorizontalPodAutoscaler as `example-hpa`.
+- In the `spec` section:
+  - The `scaleTargetRef` field specifies the target Deployment that should be scaled by the HPA. The HPA will scale the Deployment named `example-deployment`.
+  - The `minReplicas` is set to `1`, meaning the HPA should always have at least one replica of the Deployment.
+  - The `maxReplicas` is set to `10`, indicating that the HPA can scale the Deployment up to 10 replicas in response to increased load.
+  - The `targetCPUUtilizationPercentage` is set to `50`, which means the HPA will try to maintain an average CPU utilization of 50% across all pods.
+
+To create the HorizontalPodAutoscaler in your Kubernetes cluster using the manifest file, save the above YAML content to a file (e.g., `example-hpa.yaml`), and then use the `kubectl apply` command:
+
+```bash
+kubectl apply -f example-hpa.yaml
+```
+
+The Kubernetes API server will create the HorizontalPodAutoscaler as specified in the manifest file. The HPA will start monitoring the CPU utilization of the target Deployment and automatically adjust the number of replicas to keep the CPU utilization close to the target value.
+
+As the workload increases, the HPA will gradually scale up the number of replicas, and when the load decreases, it will scale down the replicas to match the desired CPU utilization target. Automatic scaling helps ensure that your application can handle varying levels of demand while optimizing resource utilization.
