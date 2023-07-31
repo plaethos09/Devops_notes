@@ -778,3 +778,5 @@ kubectl apply -f example-pv.yaml
 ```
 
 The Kubernetes API server will create the PersistentVolume as specified in the manifest file. This PersistentVolume is now available for consumption by creating PersistentVolumeClaims (PVCs) that request storage with specific access modes and capacity requirements.
+
+![alt text](https://github.com/plaethos09/Devops_notes/blob/main/img/Screenshot%202023-08-01%20at%2012.17.08%20AM.png)
