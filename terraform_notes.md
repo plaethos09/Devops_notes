@@ -313,3 +313,32 @@ Security, Identity & Compliance:
 - aws_ssoadmin_account_assignment - SSO assignments
 
 And many more AWS services and resources supported by the Terraform AWS provider.
+
+*
+*
+*
+*
+*
+*
+*
+*
+
+**Task 1: Create an aws instance**
+
+
+
+
+                                                                                                                      
+                                                                                                                      
+                                                                                                                      
+                                                                                                                      
+                                                                                                                      
+                                                                                                                          
+                                                                                                                          
+                                                                                                                          
+
+
+
+
+
+
