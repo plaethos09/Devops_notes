@@ -325,7 +325,8 @@ And many more AWS services and resources supported by the Terraform AWS provider
 
 **Task 1: Create an aws instance and connect to the instance and update the instance**
 
-''' provider "aws" {
+``` 
+provider "aws" {
   region = "us-east-1"  # Set your desired AWS region
 }
 
@@ -353,7 +354,7 @@ resource "aws_instance" "example_instance" {
     ]
   }
 }
-'''
+```
 
 
 
