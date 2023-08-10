@@ -86,3 +86,69 @@ State:
 - State mapping allows Terraform to determine changes to make to reach desired state.
 
 - Remote backends can store state. Enables Terraform in teams by preventing conflicts.
+
+
+
+
+
+**Basics Of a terraform Script**
+
+Here are some basics of what a Terraform script contains:
+
+- Provider Block - Configures and authenticates the provider like AWS, GCP, Azure etc. Required for Terraform to work.
+
+```
+provider "aws" {
+  region = "us-east-1"
+  access_key = "<ACCESS_KEY>"
+  secret_key = "<SECRET_KEY>"
+}
+```
+
+- Resource Blocks - Defines components to provision like compute, storage, networking. Resources are managed by providers.
+
+```
+resource "aws_instance" "example" {
+  ami = "ami-0abcd1234efg567h"
+  instance_type = "t2.micro"
+}
+```
+
+- Input Variables - Used to parameterize the script for reusability. Variables are assigned from outside the script.
+
+```
+variable "region" {
+  default = "us-east-1" 
+}
+
+provider "aws" {
+  region = var.region 
+}
+```
+
+- Output Values - Exports attributes of resources provisioned. Used to print information about resources.
+
+```
+output "instance_ip" {
+  value = aws_instance.example.public_ip
+}
+``` 
+
+- Terraform Block - Configures Terraform version and backend to store state. Required block.
+
+```
+terraform {
+  required_version = ">= 1.0"
+  backend "s3" {
+    bucket = "terraform-state-bucket"
+    key    = "project/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+```
+
+- Data Sources - Used to fetch read-only data from providers rather than provisioning resources.
+
+- Modules - Reusable units of Terraform code to promote abstraction and encapsulation.
+
+So in summary, a Terraform script brings together resources, providers, variables, outputs and data sources to provision and manage infrastructure.
