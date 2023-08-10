@@ -152,3 +152,50 @@ terraform {
 - Modules - Reusable units of Terraform code to promote abstraction and encapsulation.
 
 So in summary, a Terraform script brings together resources, providers, variables, outputs and data sources to provision and manage infrastructure.
+
+**Resources in Aws**
+
+Here is a list of some of the key AWS resources that can be provisioned and managed with Terraform:
+
+Compute Resources:
+
+- aws_instance - EC2 instances
+- aws_autoscaling_group - Auto Scaling Groups 
+- aws_spot_instance_request - Spot Instances
+- aws_eks_cluster - EKS Kubernetes clusters
+- aws_ecs_cluster - ECS clusters
+- aws_lambda_function - Lambda functions
+
+Storage Resources:
+
+- aws_ebs_volume - EBS volumes
+- aws_s3_bucket - S3 buckets
+- aws_efs_file_system - EFS file systems
+- aws_fsx_windows_file_system - FSx for Windows file systems
+
+Database Resources:
+
+- aws_rds_cluster - RDS databases
+- aws_dynamodb_table - DynamoDB tables
+- aws_documentdb_cluster - DocumentDB clusters
+- aws_neptune_cluster - Neptune graph databases
+
+Networking Resources:
+
+- aws_vpc - Virtual private clouds
+- aws_subnet - VPC subnets
+- aws_security_group - EC2 security groups  
+- aws_route_table - Route tables
+- aws_internet_gateway - Internet gateways
+
+Other Resources:
+
+- aws_iam_role - IAM roles
+- aws_iam_policy - IAM policies
+- aws_cloudwatch_log_group - CloudWatch log groups
+- aws_sns_topic - SNS topics
+- aws_sqs_queue - SQS queues
+- aws_api_gateway - API Gateways
+- aws_cloudfront_distribution - CloudFront CDN
+
+And many more AWS infrastructure components. The full list is available in the Terraform AWS provider documentation.
