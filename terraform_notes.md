@@ -31,3 +31,58 @@ Here is a quick overview of some basics of Terraform:
 - Terraform facilitates Infrastructure as Code practices like version control, testing, reuse, and collaboration for managing infrastructure.
 
 So in summary, Terraform allows declarative infrastructure provisioning, provides predictable infrastructure management, and promotes IaC best practices. These basics cover the key aspects of getting started with Terraform.
+
+
+
+
+
+
+
+
+**key components of Terraform**
+
+Here is a more detailed explanation of the key components of Terraform:
+
+Providers:
+
+- Providers are plugins that allow Terraform to interact with different infrastructure platforms like AWS, Azure, GCP, Kubernetes etc. 
+
+- Terraform uses providers to translate API interactions into resource creation. Each provider adds their own resources and data sources.
+
+- Providers are distributed separately from Terraform itself and injected at runtime. Terraform init downloads providers defined in configuration.
+
+- Example providers: aws, azurerm, google, kubernetes. Provider block configures provider with required credentials.
+
+Resources: 
+
+- Resources represent infrastructure objects like compute, storage, networking that you can manage with Terraform. 
+
+- Resource blocks define components of infrastructure to provision.
+
+- Examples: aws_instance, azurerm_virtual_machine, google_compute_instance.
+
+- Each resource has arguments like instance type, image ID, tags, etc. Resource types and arguments depend on the provider.
+
+Input Variables:
+
+- Input variables provide parameters to customize infrastructure provisioning.
+
+- Variables can be defined in a variables.tf file and set from CLI, environment, terraform.tfvars.
+
+- Input variables make configurations reusable and parameterized.
+
+Output Values:
+
+- Output values export structured data about resources managed by Terraform.
+
+- Output blocks can return data like IPs, DNS names, etc.
+
+- Outputs let you use resource attributes elsewhere in configuration. Helps visualize what Terraform provisioned.
+
+State: 
+
+- Terraform state keeps track of real world infrastructure vs config. Stored in terraform.tfstate.
+
+- State mapping allows Terraform to determine changes to make to reach desired state.
+
+- Remote backends can store state. Enables Terraform in teams by preventing conflicts.
