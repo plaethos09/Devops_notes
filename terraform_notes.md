@@ -323,7 +323,37 @@ And many more AWS services and resources supported by the Terraform AWS provider
 *
 *
 
-**Task 1: Create an aws instance**
+**Task 1: Create an aws instance and connect to the instance and update the instance**
+
+''' provider "aws" {
+  region = "us-east-1"  # Set your desired AWS region
+}
+
+resource "aws_instance" "example_instance" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Your desired AMI ID
+  instance_type = "t2.micro"
+  key_name      = "your-key-pair-name"    # Replace with your key pair name
+  subnet_id     = "subnet-0123456789abcdef0"  # Replace with your subnet ID
+
+  tags = {
+    Name = "ExampleInstance"
+  }
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"  # Use appropriate username for your AMI (ec2-user for Amazon Linux, ubuntu for Ubuntu)
+    private_key = file("/path/to/your/key.pem")  # Replace with the path to your private key
+    host        = self.public_ip  # Use the instance's public IP address
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum update -y",  # For Amazon Linux
+      "sudo apt update -y"   # For Ubuntu
+    ]
+  }
+}
+'''
 
 
 
