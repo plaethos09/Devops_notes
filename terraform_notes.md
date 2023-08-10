@@ -198,4 +198,118 @@ Other Resources:
 - aws_api_gateway - API Gateways
 - aws_cloudfront_distribution - CloudFront CDN
 
-And many more AWS infrastructure components. The full list is available in the Terraform AWS provider documentation.
+**Other Resources**
+
+Here is a more comprehensive list of other key AWS resources that can be provisioned with Terraform:
+
+Management and Governance:
+
+- aws_organizations_account - AWS Organizations accounts
+- aws_cloudtrail - CloudTrail logs 
+- aws_config_configuration_recorder - AWS Config recorder
+- aws_cloudwatch_event_rule - CloudWatch event rules
+
+Compute:
+
+- aws_lightsail_instance - Lightsail instances
+- aws_batch_compute_environment - AWS Batch environments
+- aws_ec2_fleet - EC2 fleet
+
+Storage:
+
+- aws_efs_access_point - EFS access points
+- aws_fsx_lustre_file_system - FSx for Lustre  
+- aws_backup_plan - AWS Backup plans
+- aws_s3_bucket_policy - S3 bucket policies
+
+Databases:
+
+- aws_elasticache_cluster - ElastiCache clusters
+- aws_redshift_cluster - Redshift clusters
+- aws_neptune_cluster_instance - Neptune instances
+- aws_dax_cluster - DAX clusters
+
+Networking: 
+
+- aws_vpc_endpoint - VPC endpoints
+- aws_vpc_endpoint_service - VPC endpoint services
+- aws_network_acl - Network ACLs
+- aws_vpc_peering_connection - VPC peerings
+
+Analytics:
+
+- aws_emr_cluster - EMR clusters 
+- aws_athena_database - Athena databases
+- aws_kinesis_stream - Kinesis Data Streams
+
+Application Services:
+
+- aws_api_gateway_rest_api - API Gateway APIs
+- aws_appsync_graphql_api - AppSync GraphQL APIs
+- aws_sagemaker_notebook_instance - SageMaker notebooks
+
+Security, Identity & Compliance:
+
+- aws_iam_user - IAM users
+- aws_kms_key - KMS keys
+- aws_waf_web_acl - WAF Web ACLs 
+- aws_ssoadmin_account_assignment - SSO assignments
+
+some other resources
+
+Here is a more comprehensive list of other key AWS resources that can be provisioned with Terraform:
+
+Management and Governance:
+
+- aws_organizations_account - AWS Organizations accounts
+- aws_cloudtrail - CloudTrail logs 
+- aws_config_configuration_recorder - AWS Config recorder
+- aws_cloudwatch_event_rule - CloudWatch event rules
+
+Compute:
+
+- aws_lightsail_instance - Lightsail instances
+- aws_batch_compute_environment - AWS Batch environments
+- aws_ec2_fleet - EC2 fleet
+
+Storage:
+
+- aws_efs_access_point - EFS access points
+- aws_fsx_lustre_file_system - FSx for Lustre  
+- aws_backup_plan - AWS Backup plans
+- aws_s3_bucket_policy - S3 bucket policies
+
+Databases:
+
+- aws_elasticache_cluster - ElastiCache clusters
+- aws_redshift_cluster - Redshift clusters
+- aws_neptune_cluster_instance - Neptune instances
+- aws_dax_cluster - DAX clusters
+
+Networking: 
+
+- aws_vpc_endpoint - VPC endpoints
+- aws_vpc_endpoint_service - VPC endpoint services
+- aws_network_acl - Network ACLs
+- aws_vpc_peering_connection - VPC peerings
+
+Analytics:
+
+- aws_emr_cluster - EMR clusters 
+- aws_athena_database - Athena databases
+- aws_kinesis_stream - Kinesis Data Streams
+
+Application Services:
+
+- aws_api_gateway_rest_api - API Gateway APIs
+- aws_appsync_graphql_api - AppSync GraphQL APIs
+- aws_sagemaker_notebook_instance - SageMaker notebooks
+
+Security, Identity & Compliance:
+
+- aws_iam_user - IAM users
+- aws_kms_key - KMS keys
+- aws_waf_web_acl - WAF Web ACLs 
+- aws_ssoadmin_account_assignment - SSO assignments
+
+And many more AWS services and resources supported by the Terraform AWS provider.
