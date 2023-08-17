@@ -377,6 +377,11 @@ This Terraform script creates an AWS EC2 instance, connects to it via SSH to run
 So in summary, this script deployes infrastructure (EC2 instance), connects over SSH to configure it, and can manage updates by modifying resources and re-applying. Let me know if any part needs more explanation!
 
 
+**excersice 1**
+https://github.com/plaethos09/ec2_terraform_apache
+**The above code is for the terraform script  which will create and instance and install apache and mysql**
+
+
                                                                                                                       
                                                                                                                       
                                                                                                                       
