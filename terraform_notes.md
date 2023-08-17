@@ -378,7 +378,10 @@ So in summary, this script deployes infrastructure (EC2 instance), connects over
 
 
 **excersice 1**
+
 https://github.com/plaethos09/ec2_terraform_apache
+
+
 **The above code is for the terraform script  which will create and instance and install apache and mysql**
 
 
